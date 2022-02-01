@@ -19,7 +19,7 @@ const PS = UsePS()
 */
 
 
-
+import React from "react";
 import PSProvider, {UsePS} from './UsePS/';
 
 function ContextProvider(props) {

@@ -1,28 +1,52 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
+  "name": "pixel-streaming-2",
+  "author": "UnreslOS",
+  "version": "0.0.3",
+  "description": "With Pixel Streaming, you run a packaged Unreal Engine application on a desktop PC or a server in the cloud, along with a small stack of web services that are included with the Unreal Engine. People connect using any modern Web browser on their platform of choice, whether desktop or mobile, and stream the rendered frames and audio from the Unreal Engine application. There's no need for users to install or download anything. It's just like streaming a video from YouTube or Netflix — except that users can also interact with the application using keyboard, mouse, touch input, and even custom HTML5 UI that you create in your player Web page.",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "pixel",
+    "streaming",
+    "unrealos",
+    "unreal",
+    "engine",
+    "epic",
+    "games"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markolofsen/pixel-streaming.git"
+  },
+  "bugs": {
+    "url": "https://github.com/markolofsen/pixel-streaming/issues"
+  },
+  "private": false,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "pixel-streaming-2": "^0.0.3",
+    "@babel/polyfill": "^7.12.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.2",
+    "moment": "^2.29.1",
+    "prop-types": "^15.8.1",
+    "styled-jss": "^2.2.3",
+    "url": "^0.11.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "no_eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -35,5 +59,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8"
   }
 }

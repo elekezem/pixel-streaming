@@ -44,7 +44,6 @@ const actions = () => {
     }
 
     init({host, port, onRestart}) {
-
       this.client.init({
         onUserCount: (count) => {
           DISPATCHER({users_count: count})

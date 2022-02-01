@@ -1,16 +1,9 @@
-import React from 'react';
-
-// libs
-// import PixelStreaming from './pixel-streaming/';
-import PixelStreaming from 'pixel-streaming-2';
-// import {Box} from 'pixel-streaming-2';
+import PixelStreaming from "./lib/";
+import "./App.css";
 
 
-function DemoStream() {
+function App() {
 
-
-  // console.error('PixelStreaming', PixelStreaming());
-  // return (<div className="123">demo</div>);
   return (
     <PixelStreaming
       onProgress={({percentage}) => {
@@ -31,4 +24,4 @@ function DemoStream() {
   )
 }
 
-export default DemoStream
+export default App
