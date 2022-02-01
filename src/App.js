@@ -17,7 +17,7 @@ function App() {
         console.error('loaded!');
       }}
       secondsToStart={300}
-      host='https://i-0609e84313ebbee13.cloudvec.com'
+      host='https://i-0f2302964982f9a0d.cloudvec.com'
       port={80} >
       <div>Nested content with player context</div>
     </PixelStreaming>
