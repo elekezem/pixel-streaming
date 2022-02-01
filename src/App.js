@@ -9,7 +9,8 @@ import PixelStreaming from 'pixel-streaming-2';
 function DemoStream() {
 
 
-  // return (<Box className="123">demo</Box>);
+  // console.error('PixelStreaming', PixelStreaming());
+  // return (<div className="123">demo</div>);
   return (
     <PixelStreaming
       onProgress={({percentage}) => {

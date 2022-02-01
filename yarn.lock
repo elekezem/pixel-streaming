@@ -9944,10 +9944,10 @@ pirates@^4.0.1, pirates@^4.0.4:
   resolved "https://registry.npmjs.org/pirates/-/pirates-4.0.5.tgz"
   integrity sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==
 
-pixel-streaming-2@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/pixel-streaming-2/-/pixel-streaming-2-0.0.2.tgz#e6d79c71547ce8028bb6c879865f548f4216d25b"
-  integrity sha512-6RbSIzmBQVIHVu7V8MIljvs4rFRm1IXmima8hk/QkI175pGsQgaUPhCYh3KSBwQHGbwVZ//+F6qac8NkBQ8hIg==
+pixel-streaming-2@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/pixel-streaming-2/-/pixel-streaming-2-0.0.3.tgz#33f7dc7d418a6179096223461f8547c5cc00d842"
+  integrity sha512-su4xfLXJxzxjMlkvP9kOG3FTzzFgPwCcDOqxrZC6xtESQ+oGUaZEe2gRcAbAXsHYO3BbORVyadlXdwyjhHkQQg==
   dependencies:
     "@babel/polyfill" "^7.12.1"
     "@testing-library/jest-dom" "^5.14.1"
@@ -9961,16 +9961,6 @@ pixel-streaming-2@^0.0.2:
     styled-jss "^2.2.3"
     url "^0.11.0"
     web-vitals "^1.1.2"
-
-pixel-streaming@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/pixel-streaming/-/pixel-streaming-1.0.6.tgz"
-  integrity sha512-mVG5FMk3qBPUWMh8Ovj0y6yyWmSREkWLczPjhcsTgXvfv7TU/8eBbTIpr6g/LEuA0jZ6zzUjkbivK/+QBeBuZw==
-  dependencies:
-    moment "^2.29.1"
-    prop-types "^15.8.1"
-    styled-jss "^2.2.3"
-    url "^0.11.0"
 
 pkg-dir@^3.0.0:
   version "3.0.0"
@@ -11272,7 +11262,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.5.8, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -11515,21 +11505,6 @@ react-dev-utils@^12.0.0:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-div@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/react-div/-/react-div-1.0.5.tgz"
-  integrity sha1-jXQQs11KBVx8ls1aIDUVVxQEuj0=
-
-react-dom@^16.0.0:
-  version "16.14.0"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.14.0.tgz"
-  integrity sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.19.1"
-
 react-dom@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
@@ -11684,15 +11659,6 @@ react-scripts@5.0.0:
     workbox-webpack-plugin "^6.4.1"
   optionalDependencies:
     fsevents "^2.3.2"
-
-react@^16.0.0:
-  version "16.14.0"
-  resolved "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
-  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
 
 react@^17.0.2:
   version "17.0.2"
@@ -12219,14 +12185,6 @@ saxes@^5.0.1:
   integrity sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==
   dependencies:
     xmlchars "^2.2.0"
-
-scheduler@^0.19.1:
-  version "0.19.1"
-  resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.19.1.tgz"
-  integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.20.2:
   version "0.20.2"
