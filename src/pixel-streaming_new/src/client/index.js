@@ -2140,7 +2140,7 @@ class AppClass extends Controller {
 	exit() {
 		const autoPlay = this.autoPlay
 		this.autoPlay = false
-		ws?.close();
+		ws.close();
 		// webRtcPlayerObj = null;
 		is_reconnection = false;
 

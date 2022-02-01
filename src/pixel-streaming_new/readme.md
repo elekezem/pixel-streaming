@@ -1,15 +1,15 @@
+https://docs.unrealengine.com/5.0/en-US/
+
+
+```javascript
 import React from 'react';
 
 // libs
-// import PixelStreaming from './pixel-streaming/';
-import PixelStreaming from 'pixel-streaming-2';
-// import {Box} from 'pixel-streaming-2';
+import PixelStreaming from 'pixel-streaming';
 
 
 function DemoStream() {
 
-
-  // return (<Box className="123">demo</Box>);
   return (
     <PixelStreaming
       onProgress={({percentage}) => {
@@ -23,11 +23,11 @@ function DemoStream() {
         console.error('loaded!');
       }}
       secondsToStart={300}
-      host='https://i-0628bae0bf8679571.cloudvec.com'
+      host='https://uuid1234567890.streamdomain.com'
       port={80} >
       <div>Nested content with player context</div>
     </PixelStreaming>
   )
 }
 
-export default DemoStream
+```
