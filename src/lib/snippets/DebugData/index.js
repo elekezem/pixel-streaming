@@ -12,10 +12,15 @@ const RootDiv = styled.div(theme => ({
     visibility: 'hidden',
     pointerEvents: 'none',
   },
+  '&[data-show="true"]': {
+    pointerEvents: 'all',
+    maxHeight: '50vh',
+  	overflow: 'auto',
+  },
 }))
 
 
-const DebugData = (props) => {
+const DebugData = ({show, ...props}) => {
 
   const renderDebug = () => {
 		return (
@@ -133,7 +138,7 @@ const DebugData = (props) => {
 	}
 
   return (
-		<RootDiv data-show={props.show}>
+		<RootDiv data-show={show} {...props}>
 	    <div id="playerUI">
 	      <div id="overlay" className="overlay text-light bg-dark">
 	        <div>

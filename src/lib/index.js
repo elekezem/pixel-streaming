@@ -14,7 +14,7 @@ import {styled} from './styles'
 import DebugData from './snippets/DebugData/'; export {DebugData}
 
 
-const VideoContainer = styled.div(theme => ({
+const VideoContainer = styled.div(() => ({
 	position: 'absolute',
 	top: 0,
 	left: 0,
@@ -33,6 +33,23 @@ const VideoContainer = styled.div(theme => ({
 	},
 }))
 
+const Content = styled.div(() => ({
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	right: 0,
+	bottom: 0,
+	pointerEvents: 'none',
+	'& > *': {
+		display: 'inline-block',
+		pointerEvents: 'all',
+	},
+	// '& [data-click="true"], button, input, select, checkbox': {
+	// 	pointerEvents: 'all',
+	// }
+}))
+
+
 const ModuleRoot = (props) => {
 	const PS = UsePS()
 
@@ -43,13 +60,22 @@ const ModuleRoot = (props) => {
 
 	const PS_LOADED = PS.state.loaded
 
+	const [debugPanel, setDebugPanel] = React.useState(true)
+
 	React.useEffect(() => {
 
-    PS.cls.init({
-      host: props.host,
-      port: props.port,
-      onRestart: () => props.onRestart(),
-    })
+		if(!document.getElementById("playerUI")) {
+			setDebugPanel(false)
+		}
+
+		setTimeout(() => { // Delay for preparing debug panel
+			PS.cls.init({
+	      host: props.host,
+	      port: props.port,
+	      onRestart: () => props.onRestart(),
+	    })
+		}, 300)
+
 
   }, [])
 
@@ -64,6 +90,11 @@ const ModuleRoot = (props) => {
 		}
 
 		emit({type, value, verification_id=undefined} = {}) {
+			if(!PS_LOADED) {
+				console.error('Command not executed, stream not loaded yet.', {type, value, verification_id});
+				return ;
+			}
+
 			PS.cls.client.emit({type, value, verification_id})
 		}
 	}
@@ -76,10 +107,13 @@ const ModuleRoot = (props) => {
 
 
   return (
-		<div>
+		<>
 			<VideoContainer data-loaded={PS_LOADED} id="player" />
-			{props.children}
-    </div>
+			<Content>
+				{!debugPanel && <DebugData show />}
+				{props.children}
+			</Content>
+    </>
 	)
 
 };

@@ -7,10 +7,10 @@ import "./App.css";
 function App() {
 
   const refPixelStreaming = React.useRef(null)
+  const [printState, setPrintState] = React.useState(false)
 
-  const printState = () => {
-    const data = refPixelStreaming.current.state
-    console.warn('State', data);
+  const refreshState = () => {
+    setPrintState(refPixelStreaming.current.state)
   }
 
   const emit = new class {
@@ -36,18 +36,20 @@ function App() {
         console.error('loaded!');
       }}
       secondsToStart={300}
-      host='https://i-0df115be76ac3acf4.cloudvec.com'
+      host='https://i-0c3fc447b626b1d07.cloudvec.com'
       port={80} >
         <div>
-          <DebugData show />
+          <DebugData show style={{maxWidth: 300, backgroundColor: 'rgba(0,0,0,.2)'}} />
           <br />
-          <button onClick={() => emit.testCommand(11)}>
+          <button data-click onClick={() => emit.testCommand(11)}>
             Send command
           </button>
           <br />
-          <button onClick={printState}>
-            Print state
+          <button data-click onClick={refreshState}>
+            Refresh state
           </button>
+          <br />
+          {printState && <pre>{JSON.stringify(printState, null, 4)}</pre>}
         </div>
     </PixelStreaming>
   )
