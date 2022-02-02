@@ -2,7 +2,7 @@
 
 const Config = new class {
   constructor() {
-    this.isDev = false
+    this.isDev = true
     this.app_key = '__ps__'
     this.callback_key = '__ps__callback__'
     this.projectDir = 'estate'

@@ -8,14 +8,14 @@ import {styled} from '../../styles'
 import "./section.module.css"
 
 const RootDiv = styled.div(theme => ({
-  width: 500,
-  visibility: 'hidden',
-  position: 'absolute',
-  pointerEvents: 'none',
+  '&[data-show="false"]': {
+    visibility: 'hidden',
+    pointerEvents: 'none',
+  },
 }))
 
 
-const DebugPanel = (props) => {
+const DebugData = (props) => {
 
   const renderDebug = () => {
 		return (
@@ -133,7 +133,7 @@ const DebugPanel = (props) => {
 	}
 
   return (
-		<RootDiv>
+		<RootDiv data-show={props.show}>
 	    <div id="playerUI">
 	      <div id="overlay" className="overlay text-light bg-dark">
 	        <div>
@@ -149,4 +149,12 @@ const DebugPanel = (props) => {
 }
 
 
-export default DebugPanel
+DebugData.propTypes = {
+	show: PropTypes.bool,
+};
+
+DebugData.defaultProps = {
+	show: false,
+};
+
+export default DebugData

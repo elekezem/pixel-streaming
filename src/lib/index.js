@@ -11,7 +11,7 @@ import {useCountdown} from './hooks/'
 import {styled} from './styles'
 
 // snippets
-import InternalHtml from './snippets/InternalHtml/'
+import DebugData from './snippets/DebugData/'; export {DebugData}
 
 
 const VideoContainer = styled.div(theme => ({
@@ -21,7 +21,10 @@ const VideoContainer = styled.div(theme => ({
 	right: 0,
 	bottom: 0,
 	overflow: 'hidden',
-
+	'&[data-loaded="false"]': {
+		pointerEvents: 'none',
+		visibility: 'hidden',
+	},
 	'& > video': {
 		height: '100%',
 		width: '100%',
@@ -38,6 +41,8 @@ const ModuleRoot = (props) => {
 		onProgress: payload => props.onProgress(payload)
 	})
 
+	const PS_LOADED = PS.state.loaded
+
 	React.useEffect(() => {
 
     PS.cls.init({
@@ -51,13 +56,28 @@ const ModuleRoot = (props) => {
 	React.useEffect(() => {
 		props.onLoad()
 		Countdown.stop()
-	}, [PS.state.loaded])
+	}, [PS_LOADED])
+
+	const cls = new class {
+		constructor() {
+			this.state = PS.state
+		}
+
+		emit({type, value, verification_id=undefined} = {}) {
+			PS.cls.client.emit({type, value, verification_id})
+		}
+	}
+
+	// The component instance will be extended
+	// with whatever you return from the callback passed
+	// as the second argument
+
+	React.useImperativeHandle(props.innerRef, () => cls);
 
 
   return (
 		<div>
-			<InternalHtml />
-			<VideoContainer id="player" />
+			<VideoContainer data-loaded={PS_LOADED} id="player" />
 			{props.children}
     </div>
 	)
@@ -79,10 +99,8 @@ ModuleRoot.defaultProps = {
 	secondsToStart: 0,
 };
 
-const ContextRoot = (props) => (
+export default React.forwardRef((props, ref) => (
 	<ContextProvider>
-		<ModuleRoot {...props} />
+		<ModuleRoot {...props} innerRef={ref} />
 	</ContextProvider>
-)
-
-export default ContextRoot
+))
