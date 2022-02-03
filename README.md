@@ -13,7 +13,9 @@ Connects to running [STUN and TURN Servers](https://docs.unrealengine.com/4.27/e
 ## Installation
 
 ```bash
-$ yarn add pixel-streaming
+npm install pixel-streaming
+# or
+yarn add pixel-streaming
 ```
 
 ## Usage
@@ -26,20 +28,21 @@ import PixelStreaming, {DebugData} from 'pixel-streaming';
 
 function App() {
   const refPixelStreaming = React.useRef(null)
-  const [printState, setPrintState] = React.useState(false)
 
-  const refreshState = () => {
-    setPrintState(refPixelStreaming.current.state)
+  const actionClass = new class {
+    constructor() {
+      this.ref = refPixelStreaming.current
+    }
+
+    _emit(type, value, verification_id=undefined) {
+      this.ref.emit({type, value, verification_id})
+    }
+
+    emitTestCommand(value) {
+      this._emit('test_command_type', value)
+    }
   }
 
-  const emit = new class {
-    emit(type, value, verification_id=undefined) {
-      refPixelStreaming.current.emit({type, value, verification_id})
-    }
-    testCommand(value) {
-      this.emit('test_command_type', value)
-    }
-  }
 
   return (
     <PixelStreaming
@@ -48,30 +51,35 @@ function App() {
         console.error({percentage});
       }}
       onRestart={() => {
-
+        // ...
       }}
       onLoad={() => {
         console.error('loaded!');
       }}
       secondsToStart={300}
-      host='https://uuid1234567890.streamdomain.com'
+      host='https://i-0c3fc447b626b1d07.cloudvec.com'
       port={80} >
+      {({state}) => (
         <div>
-          <DebugData style={{maxWidth: 300, backgroundColor: 'rgba(0,0,0,.2)'}} />
+          <DebugData
+            show
+            style={{maxWidth: 300, backgroundColor: 'rgba(0,0,0,.2)'}}
+          />
+
           <br />
-          <button onClick={() => emit.testCommand(11)}>
-            Send command
+          <button onClick={() => actionClass.emitTestCommand(11)}>
+            Test command
           </button>
+
           <br />
-          <button onClick={refreshState}>
-            Refresh state
-          </button>
-          <br />
-          {printState && <pre>{JSON.stringify(printState, null, 4)}</pre>}
+          {<pre>{JSON.stringify(state, null, 4)}</pre>}
         </div>
+      )}
     </PixelStreaming>
   )
 }
+
+export default App
 ```
 
 ## Props
@@ -84,7 +92,7 @@ function App() {
 | secondsToStart | `int` — Approximate stream start time in seconds                                                                                                                                                         |
 | host           | String host to url with signal server.<br/>If host starts wih`https` then it will be used `wss` <br/>If starts with `http` then will be used `ws`<br/>Example: `https://uuid1234567890.streamdomain.com` |
 | port           | `int` — port of signal server, default `80`                                                                                                                                                              |
-| children       | `node` — All child elements inherit context from the library                                                                                                                                             |
+| children       | `function` — Children element with inner data (`{({state}) => (...)}`)                                                                                                                                   |
 | ref            | Reference to object                                                                                                                                                                                      |
 
 ## Reference object data
@@ -129,10 +137,6 @@ refPixelStreaming.current.emit({
 - [React](https://reactjs.org/) - A JavaScript library for building user interfaces
 - [Unreal Engine Pixel Streaming](https://docs.unrealengine.com/5.0/en-US) - Library for Unreal Engine.
 - [Styled Jss](https://www.npmjs.com/package/styled-jss) - Styled Components on top of JSS
-
-
-
-
 
 ---
 

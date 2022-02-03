@@ -76,7 +76,6 @@ const ModuleRoot = (props) => {
 	    })
 		}, 300)
 
-
   }, [])
 
 	React.useEffect(() => {
@@ -84,10 +83,8 @@ const ModuleRoot = (props) => {
 		Countdown.stop()
 	}, [PS_LOADED])
 
-	const cls = new class {
-		constructor() {
-			this.state = PS.state
-		}
+	const refClass = new class {
+		constructor() {}
 
 		emit({type, value, verification_id=undefined} = {}) {
 			if(!PS_LOADED) {
@@ -99,11 +96,19 @@ const ModuleRoot = (props) => {
 		}
 	}
 
+	const contextClass = new class {
+		constructor() {}
+
+		get state() {
+			return PS.state;
+		}
+	}
+
 	// The component instance will be extended
 	// with whatever you return from the callback passed
 	// as the second argument
 
-	React.useImperativeHandle(props.innerRef, () => cls);
+	React.useImperativeHandle(props.innerRef, () => refClass);
 
 
   return (
@@ -111,7 +116,7 @@ const ModuleRoot = (props) => {
 			<VideoContainer data-loaded={PS_LOADED} id="player" />
 			<Content>
 				{!debugPanel && <DebugData show={false} />}
-				{props.children}
+				{props.children(contextClass)}
 			</Content>
     </>
 	)
@@ -119,6 +124,7 @@ const ModuleRoot = (props) => {
 };
 
 ModuleRoot.propTypes = {
+	children: PropTypes.func.isRequired,
 	host: PropTypes.string.isRequired,
 	port: PropTypes.number,
 	onRestart: PropTypes.func,
@@ -127,6 +133,7 @@ ModuleRoot.propTypes = {
 };
 
 ModuleRoot.defaultProps = {
+	children: () => {},
 	onRestart: () => {},
 	onLoad: () => {},
 	onProgress: () => {},
