@@ -110,7 +110,7 @@ const ModuleRoot = (props) => {
 		<>
 			<VideoContainer data-loaded={PS_LOADED} id="player" />
 			<Content>
-				{!debugPanel && <DebugData show />}
+				{!debugPanel && <DebugData show={false} />}
 				{props.children}
 			</Content>
     </>
@@ -120,7 +120,7 @@ const ModuleRoot = (props) => {
 
 ModuleRoot.propTypes = {
 	host: PropTypes.string.isRequired,
-	port: PropTypes.number.isRequired,
+	port: PropTypes.number,
 	onRestart: PropTypes.func,
 	onLoad: PropTypes.func,
 	secondsToStart: PropTypes.number.isRequired,
@@ -130,6 +130,8 @@ ModuleRoot.defaultProps = {
 	onRestart: () => {},
 	onLoad: () => {},
 	onProgress: () => {},
+	host: undefined,
+	port: 80,
 	secondsToStart: 0,
 };
 

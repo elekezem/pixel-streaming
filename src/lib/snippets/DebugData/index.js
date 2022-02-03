@@ -159,7 +159,7 @@ DebugData.propTypes = {
 };
 
 DebugData.defaultProps = {
-	show: false,
+	show: true,
 };
 
 export default DebugData
