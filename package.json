@@ -1,7 +1,7 @@
 {
   "name": "pixel-streaming",
   "author": "UnreslOS",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "With Pixel Streaming, you run a packaged Unreal Engine application on a desktop PC or a server in the cloud, along with a small stack of web services that are included with the Unreal Engine.",
   "license": "MIT",
   "keywords": [

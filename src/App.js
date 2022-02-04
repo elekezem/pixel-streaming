@@ -25,14 +25,27 @@ function App() {
   return (
     <PixelStreaming
       ref={refPixelStreaming}
-      onProgress={({percentage}) => {
-        console.warn({percentage});
+
+      onLoad={(payload) => {
+        console.warn('loaded', payload);
+      }}
+      onConnect={() => {
+        console.warn('connected');
       }}
       onRestart={() => {
         // ...
       }}
-      onLoad={() => {
-        console.warn('loaded!');
+      onError={({code, reason}) => {
+        console.error('error', {code, reason});
+      }}
+      onClose={({code, reason}) => {
+        console.error('closed', {code, reason});
+      }}
+      onCallback={(payload => {
+        console.warn('callback', payload);
+      })}
+      onProgress={({percentage}) => {
+        console.warn('progress', {percentage});
       }}
       secondsToStart={300}
       host='https://i-0c3fc447b626b1d07.cloudvec.com'

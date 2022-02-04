@@ -55,7 +55,7 @@ const ModuleRoot = (props) => {
 
 	const Countdown = useCountdown({
 		seconds: props.secondsToStart,
-		onProgress: payload => props.onProgress(payload)
+		onProgress: props.onProgress,
 	})
 
 	const PS_LOADED = PS.state.loaded
@@ -72,14 +72,20 @@ const ModuleRoot = (props) => {
 			PS.cls.init({
 	      host: props.host,
 	      port: props.port,
-	      onRestart: () => props.onRestart(),
+
+				onLoad: props.onLoad,
+				onConnect: props.onConnect,
+				onRestart: props.onRestart,
+				onError: props.onError,
+				onClose: props.onClose,
+
+				onCallback: props.onCallback,
 	    })
 		}, 300)
 
   }, [])
 
 	React.useEffect(() => {
-		props.onLoad()
 		Countdown.stop()
 	}, [PS_LOADED])
 
@@ -125,17 +131,30 @@ const ModuleRoot = (props) => {
 
 ModuleRoot.propTypes = {
 	children: PropTypes.func.isRequired,
+
+	onLoad: PropTypes.func,
+	onConnect: PropTypes.func,
+	onRestart: PropTypes.func,
+	onError: PropTypes.func,
+	onClose: PropTypes.func,
+	onCallback: PropTypes.func,
+
+	onProgress: PropTypes.func,
 	host: PropTypes.string.isRequired,
 	port: PropTypes.number,
-	onRestart: PropTypes.func,
-	onLoad: PropTypes.func,
 	secondsToStart: PropTypes.number.isRequired,
 };
 
 ModuleRoot.defaultProps = {
 	children: () => {},
-	onRestart: () => {},
+
 	onLoad: () => {},
+	onConnect: () => {},
+	onRestart: () => {},
+	onError: () => {},
+	onClose: () => {},
+	onCallback: () => {},
+
 	onProgress: () => {},
 	host: undefined,
 	port: 80,

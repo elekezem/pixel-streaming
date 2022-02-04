@@ -43,12 +43,14 @@ const actions = () => {
       this.client = ClientClass
     }
 
-    init({host, port, onRestart}) {
+    init({host, port, onRestart, onCallback, onLoad, onConnect, onError, onClose}) {
       this.client.init({
         onUserCount: (count) => {
           DISPATCHER({users_count: count})
         },
         onCallback: (detail) => {
+
+          onCallback(detail)
 
           // // Update state from click on stream
           // if(detail?.caller === 'stream') {
@@ -70,15 +72,20 @@ const actions = () => {
           console.warn('::onLoad');
           DISPATCHER({...defaultState, loaded: true, stream_config})
 
+          onLoad(stream_config)
           // renewIntercation()
         },
         onConnect: () => {
           console.warn('::onConnect');
           DISPATCHER({...defaultState, connect: true})
+
+          onConnect()
         },
         onError: ({code, reason}) => {
           console.warn('::onError', {code, reason});
           DISPATCHER({error: {code, reason}})
+
+          onError({code, reason})
         },
         onClose: async ({code, reason}) => {
           console.warn('::onClose', {code, reason});
@@ -92,6 +99,8 @@ const actions = () => {
           if(code === 4000) { // stream server closed
             await onRestart()
     			}
+
+          onClose()
         },
         onMouseMove: (mouse_moving) => {
           DISPATCHER({mouse_moving})
