@@ -68,22 +68,26 @@ const ModuleRoot = (props) => {
 			setDebugPanel(false)
 		}
 
-		setTimeout(() => { // Delay for preparing debug panel
-			PS.cls.init({
-	      host: props.host,
-	      port: props.port,
-
-				onLoad: props.onLoad,
-				onConnect: props.onConnect,
-				onRestart: props.onRestart,
-				onError: props.onError,
-				onClose: props.onClose,
-
-				onCallback: props.onCallback,
-	    })
-		}, 300)
+		if(props.autoConnect) {
+			setTimeout(initConnection, 300) // Delay for preparing debug panel
+		}
 
   }, [])
+
+	const initConnection = () => {
+		PS.cls.init({
+			host: props.host,
+			port: props.port,
+
+			onLoad: props.onLoad,
+			onConnect: props.onConnect,
+			onRestart: props.onRestart,
+			onError: props.onError,
+			onClose: props.onClose,
+
+			onCallback: props.onCallback,
+		})
+	}
 
 	React.useEffect(() => {
 		Countdown.stop()
@@ -107,6 +111,9 @@ const ModuleRoot = (props) => {
 
 		get state() {
 			return PS.state;
+		}
+		setConnection() {
+			initConnection()
 		}
 	}
 
@@ -143,6 +150,7 @@ ModuleRoot.propTypes = {
 	host: PropTypes.string.isRequired,
 	port: PropTypes.number,
 	secondsToStart: PropTypes.number.isRequired,
+	autoConnect: PropTypes.bool,
 };
 
 ModuleRoot.defaultProps = {
@@ -159,6 +167,7 @@ ModuleRoot.defaultProps = {
 	host: undefined,
 	port: 80,
 	secondsToStart: 0,
+	autoConnect: true,
 };
 
 export default React.forwardRef((props, ref) => (

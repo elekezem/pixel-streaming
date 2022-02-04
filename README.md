@@ -28,6 +28,7 @@ import PixelStreaming, {DebugData} from 'pixel-streaming';
 
 function App() {
   const refPixelStreaming = React.useRef(null)
+  const [serverData, setServerData] = React.useState({host: 'http://127.0.0.1', port: 80})
 
   const actionClass = new class {
     constructor() {
@@ -45,37 +46,70 @@ function App() {
 
 
   return (
-    <PixelStreaming
-      ref={refPixelStreaming}
-      onProgress={({percentage}) => {
-        console.error({percentage});
-      }}
-      onRestart={() => {
-        // ...
-      }}
-      onLoad={() => {
-        console.error('loaded!');
-      }}
-      secondsToStart={300}
-      host='https://i-0c3fc447b626b1d07.cloudvec.com'
-      port={80} >
-      {({state}) => (
-        <div>
-          <DebugData
-            show
-            style={{maxWidth: 300, backgroundColor: 'rgba(0,0,0,.2)'}}
-          />
+    <div>
 
-          <br />
-          <button onClick={() => actionClass.emitTestCommand(11)}>
-            Test command
-          </button>
+      <PixelStreaming
+        ref={refPixelStreaming}
 
-          <br />
-          {<pre>{JSON.stringify(state, null, 4)}</pre>}
-        </div>
-      )}
-    </PixelStreaming>
+        onLoad={(payload) => {
+          console.warn('loaded', payload);
+        }}
+        onConnect={() => {
+          console.warn('connected');
+        }}
+        onRestart={() => {
+          // ...
+        }}
+        onError={(payload) => {
+          console.error('error', payload);
+        }}
+        onClose={(payload) => {
+          console.error('closed', payload);
+        }}
+        onCallback={(payload => {
+          console.warn('callback', payload);
+        })}
+        onProgress={(payload) => {
+          console.warn('progress', payload);
+        }}
+        secondsToStart={300}
+        autoConnect={false}
+        host={serverData.host}
+        port={serverData.port} >
+        {({state, setConnection}) => (
+          <div>
+
+            <form onSubmit={(event) => {
+              event.preventDefault()
+              event.stopPropagation()
+
+              setConnection()
+            }}>
+              <input type="text" placeholder="http://127.0.0.1" value={serverData.host} onChange={(event) => setServerData(c => ({
+                ...c, host: event.target.value
+              }))} />
+              <input type="number" placeholder="80" value={serverData.port} onChange={(event) => setServerData(c => ({
+                ...c, port: event.target.value
+              }))} />
+              <button type="submit">Connect</button>
+            </form>
+
+            <DebugData
+              show
+              style={{maxWidth: 300, backgroundColor: 'rgba(0,0,0,.2)'}}
+            />
+
+            <br />
+            <button onClick={() => actionClass.emitTestCommand(11)}>
+              Test command
+            </button>
+
+            <br />
+            {<pre>{JSON.stringify(state, null, 4)}</pre>}
+          </div>
+        )}
+      </PixelStreaming>
+    </div>
   )
 }
 
