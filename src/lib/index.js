@@ -69,25 +69,10 @@ const ModuleRoot = (props) => {
 		}
 
 		if(props.autoConnect) {
-			setTimeout(initConnection, 300) // Delay for preparing debug panel
+			setTimeout(() => ContextClass.initConnection(), 300) // Delay for preparing debug panel
 		}
 
   }, [])
-
-	const initConnection = () => {
-		PS.cls.init({
-			host: props.host,
-			port: props.port,
-
-			onLoad: props.onLoad,
-			onConnect: props.onConnect,
-			onRestart: props.onRestart,
-			onError: props.onError,
-			onClose: props.onClose,
-
-			onCallback: props.onCallback,
-		})
-	}
 
 	React.useEffect(() => {
 		Countdown.stop()
@@ -106,14 +91,26 @@ const ModuleRoot = (props) => {
 		}
 	}
 
-	const contextClass = new class {
+	const ContextClass = new class {
 		constructor() {}
 
 		get state() {
 			return PS.state;
 		}
-		setConnection() {
-			initConnection()
+		
+		initConnection() {
+			PS.cls.init({
+				host: props.host,
+				port: props.port,
+
+				onLoad: props.onLoad,
+				onConnect: props.onConnect,
+				onRestart: props.onRestart,
+				onError: props.onError,
+				onClose: props.onClose,
+
+				onCallback: props.onCallback,
+			})
 		}
 	}
 
@@ -129,7 +126,7 @@ const ModuleRoot = (props) => {
 			<VideoContainer data-loaded={PS_LOADED} id="player" />
 			<Content>
 				{!debugPanel && <DebugData show={false} />}
-				{props.children(contextClass)}
+				{props.children(ContextClass)}
 			</Content>
     </>
 	)

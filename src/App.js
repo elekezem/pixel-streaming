@@ -22,6 +22,32 @@ function App() {
     }
   }
 
+  const renderForm = ({state, initConnection}) => {
+    if(state.loaded) {
+      return (
+        <button onClick={() => actionClass.emitTestCommand(11)}>
+          Test command
+        </button>
+      )
+    }
+
+    return (
+      <form onSubmit={(event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        initConnection()
+      }}>
+        <input type="text" placeholder="http://127.0.0.1" value={serverData.host} onChange={(event) => setServerData(c => ({
+          ...c, host: event.target.value
+        }))} />
+        <input style={{width: 50}} type="number" placeholder="80" value={serverData.port} onChange={(event) => setServerData(c => ({
+          ...c, port: event.target.value
+        }))} />
+        <button type="submit">Connect</button>
+      </form>
+    )
+  }
 
   return (
     <div>
@@ -54,39 +80,22 @@ function App() {
         autoConnect={false}
         host={serverData.host}
         port={serverData.port} >
-        {({state, setConnection}) => (
-          <div>
+        {({state, initConnection}) => (
+          <div style={{padding: 30}}>
 
-            <form onSubmit={(event) => {
-              event.preventDefault()
-              event.stopPropagation()
+            {renderForm({state, initConnection})}
 
-              setConnection()
-            }}>
-              <input type="text" placeholder="http://127.0.0.1" value={serverData.host} onChange={(event) => setServerData(c => ({
-                ...c, host: event.target.value
-              }))} />
-              <input type="number" placeholder="80" value={serverData.port} onChange={(event) => setServerData(c => ({
-                ...c, port: event.target.value
-              }))} />
-              <button type="submit">Connect</button>
-            </form>
+            {<pre>{JSON.stringify(state, null, 4)}</pre>}
 
             <DebugData
               show
-              style={{maxWidth: 300, backgroundColor: 'rgba(0,0,0,.2)'}}
+              style={{width: 300, backgroundColor: 'rgba(0,0,0,.2)'}}
             />
 
-            <br />
-            <button onClick={() => actionClass.emitTestCommand(11)}>
-              Test command
-            </button>
-
-            <br />
-            {<pre>{JSON.stringify(state, null, 4)}</pre>}
           </div>
         )}
       </PixelStreaming>
+
     </div>
   )
 }
